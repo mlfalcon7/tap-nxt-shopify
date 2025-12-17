@@ -1,26 +1,216 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-montserrat: "Montserrat", sans-serif;
+  --font-museo: "MuseoModerno", display;
+  --font-heading: var(--font-montserrat), "Helvetica Neue", "Segoe UI", sans-serif;
+  --font-display: var(--font-museo), var(--font-montserrat), sans-serif;
+
+  --tap-navy: #0B1020;
+  --tap-ink: #050814;
+  --tap-offwhite: #F7F4ED;
+  --tap-red: #B31942;
+  --tap-gold: #C8A04B;
+  --tap-bone: var(--tap-offwhite);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Single theme mode - light theme only */
+html[data-theme="light"],
+html {
+  color-scheme: light;
+  --background: var(--tap-bone);
+  --foreground: var(--tap-navy);
+  --surface: #FFFFFF;
+  --surface-strong: #F1ECE4;
+
+  --text-primary: var(--tap-navy);
+  --text-secondary: #223047;
+  --text-muted: #5B6778;
+  --muted: #F1ECE4;
+  --muted-foreground: #5B6778;
+
+  --primary: #123A73;
+  --primary-hover: #0E2F5F;
+  --primary-active: #0A244A;
+  --primary-foreground: var(--tap-bone);
+
+  --secondary: var(--tap-navy);
+  --secondary-hover: #050814;
+  --secondary-active: #03060F;
+  --secondary-foreground: var(--tap-bone);
+
+  --accent: var(--tap-gold);
+  --accent-foreground: var(--tap-navy);
+  --accent-secondary: var(--tap-red);
+  --link: #123A73;
+  --link-hover: #0A244A;
+
+  --border: #D8D1C6;
+  --border-strong: #BEB4A3;
+  --input: #D8D1C6;
+  --ring: var(--tap-red);
+
+  --success: #2F6B4F;
+  --warning: #C98B2E;
+  --danger: var(--tap-red);
+
+  --action-band-bg: var(--tap-navy);
+  --action-band-text: var(--tap-bone);
+  --action-band-border: #1C2740;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html[data-theme="light"] .tap-logo-dark {
+  display: none;
+}
+
+html[data-theme="dark"] .tap-logo-light {
+  display: none;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-montserrat), "Helvetica Neue", "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7; /* Increased for better readability */
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px mobile, 18px desktop */
+    font-weight: 400; /* Ensure readable weight, not ultra-light */
+    /* Subtle texture - American material feel */
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.01) 2px,
+        rgba(0, 0, 0, 0.01) 4px
+      );
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .h1,
+  .h2,
+  .h3 {
+    font-family: var(--font-heading);
+  }
+
+  .display {
+    font-family: var(--font-display);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-width {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .h1 {
+    @apply text-4xl font-bold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl;
+  }
+
+  .h2 {
+    @apply text-3xl font-semibold leading-tight tracking-tight md:text-4xl;
+  }
+
+  .h3 {
+    @apply text-2xl font-semibold leading-tight tracking-tight;
+  }
+
+  .subtle-motion {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .action-band {
+    background-color: var(--action-band-bg);
+    color: var(--action-band-text);
+    border-color: var(--action-band-border);
+  }
+
+  .divider-faint {
+    background: color-mix(in srgb, var(--border) 70%, transparent);
+  }
+
+  /* Readability improvements - ensure minimum readable sizes */
+  .text-xs {
+    font-size: 0.875rem; /* 14px minimum */
+    line-height: 1.5;
+  }
+
+  /* Premium eyebrow label - readable section labels */
+  .eyebrow {
+    font-size: clamp(0.875rem, 0.8rem + 0.2vw, 0.9375rem); /* 14-15px */
+    font-weight: 500; /* Medium weight, not hairline */
+    letter-spacing: 0.08em; /* Subtle spacing, not excessive */
+    line-height: 1.5;
+    text-transform: uppercase;
+  }
+
+  /* Reduce excessive letter-spacing for better readability */
+  .tracking-wide {
+    letter-spacing: 0.05em;
+  }
+
+  .tracking-wider {
+    letter-spacing: 0.1em;
+  }
+
+  /* Premium button base styles */
+  .btn-premium {
+    transition: all 150ms ease-out;
+    font-weight: 500;
+  }
+
+  .btn-premium:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-premium:active {
+    transform: translateY(0);
+  }
+
+  /* Star separator utility */
+  .star-separator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .star-separator::before,
+  .star-separator::after {
+    content: "★";
+    color: var(--accent-secondary);
+    font-size: 0.75rem;
+  }
+
+  /* Heritage stripe motif - subtle American detail */
+  .heritage-stripe {
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      color-mix(in srgb, var(--accent-secondary) 8%, transparent) 2px,
+      color-mix(in srgb, var(--accent-secondary) 8%, transparent) 4px
+    );
+  }
+
+  .heritage-stripe-vertical {
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      color-mix(in srgb, var(--accent-secondary) 8%, transparent) 2px,
+      color-mix(in srgb, var(--accent-secondary) 8%, transparent) 4px
+    );
+  }
 }

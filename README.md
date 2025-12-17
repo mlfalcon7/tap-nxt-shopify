@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## TAP — True American Pets
 
-## Getting Started
+Senior-ready reference implementation of a Next.js App Router storefront wired to Shopify, MDX stories, Hall of Heroes UGC, and prelaunch tooling.
 
-First, run the development server:
+### Brand Assets
+
+- Official logos from the TAP delivery kit live in `public/brand/` (e.g., `logo-main.svg`). Swap variants per background (white for dark, full-color for light) without editing the component tree.
+- Brand fonts are bundled via `next/font/local`:
+  - `public/fonts/Montserrat-VariableFont_wght.ttf` (+ italic) for body copy.
+  - `public/fonts/MuseoModerno-VariableFont_wght.ttf` (+ italic) for headings and mission accents.
+  These are wired in `app/layout.tsx` and surfaced through CSS variables in `app/globals.css`.
+
+### Shopify Storefront Setup
+
+1. Create a Storefront API app inside Shopify admin and copy the domain + Storefront access token.
+2. Configure the variables listed in `.env.example`:
+   - `SHOPIFY_STORE_DOMAIN`
+   - `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
+   - `SHOPIFY_API_VERSION`
+   - `NEXT_PUBLIC_SITE_URL`
+   - `NEXT_PUBLIC_PRELAUNCH`
+   - `NEXT_PUBLIC_GA4_ID`
+   - `NEXT_PUBLIC_TIKTOK_PIXEL_ID`
+3. The app falls back to mock data if the Shopify env vars are missing so local dev still works.
+
+### Metafields Namespace
+
+All filters and PDP logic assume the `tap` namespace with these keys:
+
+| Key         | Purpose                              |
+| ----------- | ------------------------------------- |
+| `material`  | Display material (e.g., CORDURA)      |
+| `use_case`  | Mission type / category               |
+| `durability`| Testing status                        |
+| `reflective`| Boolean flag for reflective gear      |
+| `made_in`   | Origin country                        |
+| `cause`     | Impact cause or campaign name         |
+| `preorder`  | `true` to enable preorder messaging   |
+
+### Prelaunch Mode
+
+Set `NEXT_PUBLIC_PRELAUNCH=true` to enable:
+
+- Global banner “Drops April 10 — Join Hero Alerts…”
+- PDP “Notify Me” lead form replacement for Add-to-Cart
+- Preorder badges sourced from metafields
+
+Switch back to `false` for normal behavior.
+
+### Running Locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Quality gate commands:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Content & CMS
 
-## Learn More
+- Stories live in `/content/stories/*.mdx` using the default flow. Add more files with frontmatter to expand the blog.
+- Hall of Heroes uses `/content/heroes.json` for seed data plus an in-memory API route. Swap in a database when ready without breaking local dev.
 
-To learn more about Next.js, take a look at the following resources:
+### Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push to GitHub and connect the repo to Vercel.
+2. Set the env vars from `.env.example` in the Vercel dashboard.
+3. Deploy; the `app/robots.ts` and `app/sitemap.ts` endpoints automatically include the configured `NEXT_PUBLIC_SITE_URL`.

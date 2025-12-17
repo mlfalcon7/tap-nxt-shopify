@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Rex",
+    "dogName": "Rex",
+    "title": "Urban Search Legend",
+    "story": "Located a missing senior in a blizzard using scent cones and a TAP reflective vest.",
+    "photoUrl": "/placeholders/hero.jpg"
+  },
+  {
+    "name": "Sloane",
+    "dogName": "Sloane",
+    "title": "Comfort Captain",
+    "story": "Runs therapy rotations for post-op veterans and distributes Pet Rights cards.",
+    "photoUrl": "/placeholders/hero.jpg"
+  },
+  {
+    "name": "Major",
+    "dogName": "Major",
+    "title": "Perimeter Guard",
+    "story": "Retired military hero turned community patrol with a TAP Hero Starter Pack.",
+    "photoUrl": "/placeholders/hero.jpg"
+  }
+]
