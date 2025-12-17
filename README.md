@@ -41,8 +41,8 @@ All filters and PDP logic assume the `tap` namespace with these keys:
 
 Set `NEXT_PUBLIC_PRELAUNCH=true` to enable:
 
-- Global banner “Drops April 10 — Join Hero Alerts…”
-- PDP “Notify Me” lead form replacement for Add-to-Cart
+- Global banner "Drops April 10 — Join Hero Alerts…"
+- PDP "Notify Me" lead form replacement for Add-to-Cart
 - Preorder badges sourced from metafields
 
 Switch back to `false` for normal behavior.
